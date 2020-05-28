@@ -20,6 +20,21 @@ if (!pullRequest) {
   core.setFailed('This action is meant to be ran on pull requests');
 }
 
+if(requestEvent === 'DISMISS') {
+octokit
+  .graphql(
+    `
+      mutation {
+        addPullRequestReview(input: {
+          pullRequestId: "${(<any>pullRequest)['node_id']}",
+          event: ${requestEvent},
+        }) {clientMutationId} }`,
+  )
+  .catch((err) => {
+    core.error(err);
+    core.setFailed(err.message);
+  });
+} else {
 octokit
   .graphql(
     `
@@ -34,3 +49,4 @@ octokit
     core.error(err);
     core.setFailed(err.message);
   });
+}
