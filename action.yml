@@ -13,3 +13,5 @@ inputs:
     default: 'APPROVE'
   body:
     description: 'The contents of the review body comment. Required when event is COMMENT or REQUEST_CHANGES.'
+  repo-token:
+    description: 'An access token'
